@@ -6,26 +6,40 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('feedback', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->tinyInteger('rating')->unsigned();        // 1 à 5
+
+            // Qui a créé ce feedback (le user connecté)
+            $table->foreignId('user_id')
+                  ->constrained()
+                  ->cascadeOnDelete();
+
+            // Info du client
+            $table->string('first_name');
+            $table->string('last_name');
+
+            // Contact du client (au moins un obligatoire)
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('whatsapp')->nullable();
+
+            // Le feedback
+            $table->tinyInteger('rating')->unsigned();
             $table->text('comment');
-            $table->enum('source', ['whatsapp', 'email', 'website', 'other'])
-                ->default('website');
+            $table->enum('source', ['whatsapp', 'email', 'website', 'phone', 'other'])
+                  ->default('website');
+
             $table->timestamps();
-            $table->index(['user_id', 'created_at']);         // Performance
+
+            // Index pour recherche rapide par user
+            $table->index(['user_id', 'created_at']);
+            // Index pour filtrer par rating
+            $table->index(['user_id', 'rating']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('feedback');
