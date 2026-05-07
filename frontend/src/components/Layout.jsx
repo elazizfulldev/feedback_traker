@@ -1,3 +1,4 @@
+import { User } from 'lucide-react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import {
@@ -12,11 +13,12 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 
+
 const navItems = [
-  { to: '/',             label: 'Dashboard',    icon: LayoutDashboard },
-  { to: '/feedback',     label: 'Feedback',     icon: MessageSquareText },
-  { to: '/feedback/new', label: 'Add Feedback', icon: PlusCircle },
-  { to: '/admins/add',   label: 'Add Admin',    icon: UserPlus },
+  { to: '/', label: 'Dashboard', icon: LayoutDashboard, roles: ['admin', 'owner'] },
+  { to: '/feedback', label: 'Feedback', icon: MessageSquareText, roles: ['admin', 'owner'] },
+  { to: '/feedback/new', label: 'Add Feedback', icon: PlusCircle, roles: ['admin', 'owner'] },
+  { to: '/admins/add', label: 'Add Admin', icon: UserPlus, roles: ['admin'] },
 ];
 
 export default function Layout() {
@@ -58,7 +60,7 @@ export default function Layout() {
         </div>
 
         <nav className="flex-1 px-3 py-4 space-y-1">
-          {navItems.map(({ to, label, icon: Icon }) => (
+          {navItems.filter(item => item.roles.includes(user?.role)).map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
               to={to}
@@ -88,6 +90,18 @@ export default function Layout() {
               <p className="text-[11px] text-white/30 truncate">{user?.email}</p>
             </div>
           </div>
+          <NavLink
+            to="/profile"
+            onClick={() => setOpen(false)}
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200 mb-2
+              ${isActive ? 'bg-accent-blue/15 text-accent-blue' : 'text-white/50 hover:text-white/80 hover:bg-glass-hover'}`
+            }
+          >
+            <User className="w-[18px] h-[18px]" />
+            Profile
+          </NavLink>
+
           <button onClick={handleLogout} className="btn-ghost w-full text-xs">
             <LogOut className="w-3.5 h-3.5" />
             Sign out

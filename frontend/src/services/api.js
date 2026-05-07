@@ -52,4 +52,17 @@ export const feedbackApi = {
   stats:  ()         => api.get('/feedback/stats'),
 };
 
+/*====== Profile API =========*/
+export const profileApi = {
+  get:          ()     => api.get('/profile'),
+  update:       (data) => api.put('/profile', data),
+  uploadAvatar: (file) => {
+    const formData = new FormData();
+    formData.append('avatar', file);
+    return api.post('/profile/avatar', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
+};
+
 export default api;
