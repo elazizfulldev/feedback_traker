@@ -16,6 +16,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'avatar',
     ];
 
     protected $hidden = [
@@ -36,5 +38,15 @@ class User extends Authenticatable
     public function feedback(): HasMany
     {
         return $this->hasMany(Feedback::class);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isOwner(): bool
+    {
+        return $this->role === 'owner';
     }
 }

@@ -15,10 +15,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user',    [AuthController::class, 'user']);
 
+     // Profile
+    Route::get('/profile',          [ProfileController::class, 'show']);
+    Route::put('/profile',          [ProfileController::class, 'update']);
+    Route::post('/profile/avatar',  [ProfileController::class, 'uploadAvatar']);
+
     // Dashboard stats (AVANT apiResource pour éviter conflit)
     Route::get('/feedback/stats', [FeedbackController::class, 'stats']);
 
     // Feedback CRUD
-    Route::apiResource('feedback', FeedbackController::class)
-        ->except(['show']);
+    Route::apiResource('feedback', FeedbackController::class)->except(['show']);
 });

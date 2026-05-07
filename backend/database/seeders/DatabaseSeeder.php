@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             'name'     => 'Demo User',
             'email'    => 'demo@example.com',
             'password' => Hash::make('password'),
+            'role'     => 'admin',
         ]);
 
         // 30 feedbacks pour le demo user
