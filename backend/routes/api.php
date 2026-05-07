@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FeedbackController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ProfileController;
 
 // ── Routes publiques ───────────────────────────────
 Route::post('/register', [AuthController::class, 'register']);

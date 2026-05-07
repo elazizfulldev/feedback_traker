@@ -15,7 +15,6 @@ class AuthController extends Controller
 {
     /**
      * POST /api/register
-     * Créer un compte et retourner un token.
      */
     public function register(RegisterRequest $request): JsonResponse
     {
@@ -23,25 +22,20 @@ class AuthController extends Controller
             'name'     => $request->validated('name'),
             'email'    => $request->validated('email'),
             'password' => Hash::make($request->validated('password')),
-            'role' => 'owner',
+            'role'     => 'owner',
         ]);
 
         $token = $user->createToken('auth-token')->plainTextToken;
 
         return response()->json([
             'message' => 'Registration successful.',
-            'user'    => [
-                'id'    => $user->id,
-                'name'  => $user->name,
-                'email' => $user->email,
-            ],
-            'token' => $token,
+            'user'    => $this->userResource($user),
+            'token'   => $token,
         ], 201);
     }
 
     /**
      * POST /api/login
-     * Vérifier credentials et retourner un token.
      */
     public function login(LoginRequest $request): JsonResponse
     {
@@ -56,18 +50,13 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Login successful.',
-            'user'    => [
-                'id'    => $user->id,
-                'name'  => $user->name,
-                'email' => $user->email,
-            ],
-            'token' => $token,
+            'user'    => $this->userResource($user),
+            'token'   => $token,
         ]);
     }
 
     /**
      * POST /api/logout
-     * Supprimer le token courant.
      */
     public function logout(Request $request): JsonResponse
     {
@@ -80,18 +69,26 @@ class AuthController extends Controller
 
     /**
      * GET /api/user
-     * Retourner le user authentifié.
      */
     public function user(Request $request): JsonResponse
     {
-        $user = $request->user();
-
         return response()->json([
-            'user' => [
-                'id'    => $user->id,
-                'name'  => $user->name,
-                'email' => $user->email,
-            ],
+            'user' => $this->userResource($request->user()),
         ]);
+    }
+
+    /**
+     * Format user data — used by all responses.
+     * Role + avatar included so frontend can show/hide pages.
+     */
+    private function userResource(User $user): array
+    {
+        return [
+            'id'     => $user->id,
+            'name'   => $user->name,
+            'email'  => $user->email,
+            'role'   => $user->role,
+            'avatar' => $user->avatar ? asset('storage/avatars/' . $user->avatar) : null,
+        ];
     }
 }
