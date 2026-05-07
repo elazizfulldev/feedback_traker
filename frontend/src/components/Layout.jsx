@@ -13,10 +13,10 @@ import {
 import { useState } from 'react';
 
 const navItems = [
-  { to: '/',            label: 'Dashboard',    icon: LayoutDashboard },
-  { to: '/feedback',    label: 'Feedback',     icon: MessageSquareText },
-  { to: '/feedback/new',label: 'Add Feedback', icon: PlusCircle },
-  { to: '/admins/add',  label: 'Add Admin',    icon: UserPlus },
+  { to: '/',             label: 'Dashboard',    icon: LayoutDashboard },
+  { to: '/feedback',     label: 'Feedback',     icon: MessageSquareText },
+  { to: '/feedback/new', label: 'Add Feedback', icon: PlusCircle },
+  { to: '/admins/add',   label: 'Add Admin',    icon: UserPlus },
 ];
 
 export default function Layout() {
@@ -31,7 +31,6 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen flex bg-dark-900 bg-mesh">
-      {/* Mobile overlay */}
       {open && (
         <div
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
@@ -39,13 +38,11 @@ export default function Layout() {
         />
       )}
 
-      {/* Sidebar */}
       <aside
         className={`fixed lg:sticky top-0 left-0 z-50 h-screen w-[260px] bg-dark-800/80 backdrop-blur-2xl
           border-r border-glass-border flex flex-col transition-transform duration-300 lg:translate-x-0
           ${open ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        {/* Logo */}
         <div className="px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center">
@@ -60,7 +57,6 @@ export default function Layout() {
           </button>
         </div>
 
-        {/* Nav */}
         <nav className="flex-1 px-3 py-4 space-y-1">
           {navItems.map(({ to, label, icon: Icon }) => (
             <NavLink
@@ -82,7 +78,6 @@ export default function Layout() {
           ))}
         </nav>
 
-        {/* User */}
         <div className="p-4 border-t border-glass-border">
           <div className="flex items-center gap-3 mb-3 px-1">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-accent-purple to-accent-rose flex items-center justify-center text-white text-xs font-bold">
@@ -100,9 +95,7 @@ export default function Layout() {
         </div>
       </aside>
 
-      {/* Main */}
       <main className="flex-1 min-w-0">
-        {/* Mobile header */}
         <div className="lg:hidden sticky top-0 z-30 h-14 bg-dark-800/80 backdrop-blur-xl border-b border-glass-border flex items-center px-4 gap-3">
           <button onClick={() => setOpen(true)} className="text-white/60">
             <Menu className="w-5 h-5" />
