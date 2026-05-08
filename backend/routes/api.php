@@ -25,6 +25,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // Dashboard stats (AVANT apiResource pour éviter conflit)
     Route::get('/feedback/stats', [FeedbackController::class, 'stats']);
 
+    // Export (admin only — checked in controller)
+    Route::get('/feedback/export', [FeedbackController::class, 'export']);
+
     // Feedback CRUD
     Route::apiResource('feedback', FeedbackController::class)->except(['show']);
 
