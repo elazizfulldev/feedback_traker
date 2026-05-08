@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FeedbackController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\UserController;
 
 // ── Routes publiques ───────────────────────────────
 Route::post('/register', [AuthController::class, 'register']);
@@ -26,4 +27,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Feedback CRUD
     Route::apiResource('feedback', FeedbackController::class)->except(['show']);
+
+    // User management (admin only)
+    Route::middleware('admin')->group(function () {
+        Route::apiResource('users', UserController::class)->except(['show']);
+    });
 });
