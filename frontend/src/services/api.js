@@ -45,11 +45,12 @@ export const authApi = {
 
 /*==== Feedback API =====*/
 export const feedbackApi = {
-  list:   (page = 1) => api.get(`/feedback?page=${page}`),
+  list:   (page = 1, ownerId = '') => api.get(`/feedback?page=${page}${ownerId ? `&owner_id=${ownerId}` : ''}`),
   create: (data)     => api.post('/feedback', data),
   update: (id, data) => api.put(`/feedback/${id}`, data),
   delete: (id)       => api.delete(`/feedback/${id}`),
-  stats:  ()         => api.get('/feedback/stats'),
+  stats:  (ownerId = '') => api.get(`/feedback/stats${ownerId ? `?owner_id=${ownerId}` : ''}`),
+  export: (ownerId = '') => api.get(`/feedback/export${ownerId ? `?owner_id=${ownerId}` : ''}`, { responseType: 'blob' }),
 };
 
 /*====== Profile API =========*/

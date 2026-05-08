@@ -2,11 +2,34 @@ import { useEffect, useState } from 'react';
 import { feedbackApi } from '../services/api';
 import { useToast } from '../contexts/ToastContext';
 import { useAuth } from '../contexts/AuthContext';
-import { MessageSquareText, Star, ThumbsUp, ThumbsDown, Minus, TrendingUp, Filter } from 'lucide-react';
-import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Tooltip, Legend, Filler } from 'chart.js';
+import {
+  MessageSquareText,
+  Star,
+  ThumbsUp,
+  ThumbsDown,
+  Minus,
+  TrendingUp,
+  Filter,
+  Download,
+} from 'lucide-react';
+import {
+  Chart as ChartJS,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+  Filler,
+} from 'chart.js';
 import { Doughnut, Bar, Line } from 'react-chartjs-2';
 
-ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Tooltip, Legend, Filler);
+ChartJS.register(
+  ArcElement, CategoryScale, LinearScale, BarElement,
+  PointElement, LineElement, Tooltip, Legend, Filler
+);
 
 const SOURCE_COLORS = { whatsapp: '#34d399', email: '#6366f1', website: '#a855f7', phone: '#22d3ee', other: '#64748b' };
 const RATING_COLORS = ['#fb7185', '#f97316', '#fbbf24', '#a3e635', '#34d399'];
@@ -30,13 +53,47 @@ export default function DashboardPage() {
   const { toast } = useToast();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedOwner, setSelectedOwner] = useState('');
+  const [exporting, setExporting] = useState(false);
 
-  useEffect(() => {
-    feedbackApi.stats()
+  const isAdmin = user?.role === 'admin';
+
+  const loadStats = (ownerId = '') => {
+    setLoading(true);
+    feedbackApi.stats(ownerId)
       .then((res) => setStats(res.data))
       .catch(() => toast('Failed to load dashboard.', 'error'))
       .finally(() => setLoading(false));
-  }, [toast]);
+  };
+
+  useEffect(() => {
+    loadStats();
+  }, []);
+
+  const handleOwnerChange = (e) => {
+    const ownerId = e.target.value;
+    setSelectedOwner(ownerId);
+    loadStats(ownerId);
+  };
+
+  const handleExport = async (format) => {
+    setExporting(true);
+    try {
+      const res = await feedbackApi.export(selectedOwner);
+      const blob = new Blob([res.data], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `feedback_export_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+      toast('Export downloaded!', 'success');
+    } catch {
+      toast('Failed to export.', 'error');
+    } finally {
+      setExporting(false);
+    }
+  };
 
   if (loading) return (
     <div className="flex items-center justify-center h-64">
@@ -69,18 +126,74 @@ export default function DashboardPage() {
   const gridStyle = { color: 'rgba(255,255,255,0.04)' };
   const scaleOpts = { x: { grid: { display: false }, border: { display: false }, ticks: axisStyle }, y: { beginAtZero: true, grid: gridStyle, border: { display: false }, ticks: { ...axisStyle, stepSize: 1 } } };
 
+  const selectedOwnerName = selectedOwner
+    ? stats.owners?.find((o) => o.id === parseInt(selectedOwner))?.name
+    : null;
+
   return (
     <div>
-      <div className="mb-8">
-        <h2 className="font-display text-3xl font-semibold tracking-tight">Hello, {user?.name?.split(' ')[0]}</h2>
-        <p className="text-white/40 text-sm mt-1">Your feedback analytics at a glance.</p>
+      <div className="flex items-start justify-between mb-6 flex-wrap gap-4">
+        <div>
+          <h2 className="font-display text-3xl font-semibold tracking-tight">
+            {isAdmin ? 'Admin Dashboard' : `Hello, ${user?.name?.split(' ')[0]}`}
+          </h2>
+          <p className="text-white/40 text-sm mt-1">
+            {isAdmin
+              ? selectedOwnerName
+                ? `Showing data for ${selectedOwnerName}`
+                : 'Showing all feedback across all owners'
+              : 'Your feedback analytics at a glance.'
+            }
+          </p>
+        </div>
+
+        {/* Export button — admin only */}
+        {isAdmin && (
+          <button
+            onClick={handleExport}
+            disabled={exporting}
+            className="btn-ghost text-xs"
+          >
+            {exporting ? (
+              <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            ) : (
+              <Download className="w-3.5 h-3.5" />
+            )}
+            Export CSV
+          </button>
+        )}
       </div>
 
-      <div className="flex items-center gap-2 mb-6">
-        <Filter className="w-4 h-4 text-accent-blue" />
-        <span className="text-xs text-white/40">Filtered by owner: <span className="text-accent-blue font-medium">{user?.name}</span></span>
-      </div>
+      {/* Owner filter — admin only */}
+      {isAdmin && stats.owners && stats.owners.length > 0 && (
+        <div className="flex items-center gap-3 mb-6">
+          <Filter className="w-4 h-4 text-accent-blue" />
+          <select
+            value={selectedOwner}
+            onChange={handleOwnerChange}
+            className="input-field max-w-xs text-sm"
+          >
+            <option value="">All owners ({stats.total_count} total)</option>
+            {stats.owners.map((o) => (
+              <option key={o.id} value={o.id}>
+                {o.name} — {o.feedback_count} feedback{o.feedback_count !== 1 ? 's' : ''}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
+      {/* Owner indicator — owner only */}
+      {!isAdmin && (
+        <div className="flex items-center gap-2 mb-6">
+          <Filter className="w-4 h-4 text-accent-blue" />
+          <span className="text-xs text-white/40">
+            Filtered by owner: <span className="text-accent-blue font-medium">{user?.name}</span>
+          </span>
+        </div>
+      )}
+
+      {/* Stat cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
         <StatCard icon={MessageSquareText} label="Total" value={stats.total_count} color="bg-accent-blue/15 text-accent-blue" glowClass="stat-glow-blue" />
         <StatCard icon={ThumbsUp} label="Positive" value={stats.positive_count} color="bg-accent-emerald/15 text-accent-emerald" glowClass="stat-glow-emerald" />
@@ -89,6 +202,7 @@ export default function DashboardPage() {
         <StatCard icon={Star} label="Avg Rating" value={stats.average_rating || 'N/A'} color="bg-accent-amber/15 text-accent-amber" glowClass="stat-glow-amber" />
       </div>
 
+      {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5">
         <div className="card-glow p-6">
           <h3 className="text-sm font-semibold text-white/70 mb-5">By Source</h3>
@@ -121,6 +235,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
+      {/* Recent feedback */}
       <div className="card-glow">
         <div className="px-6 py-4 border-b border-glass-border flex items-center justify-between">
           <h3 className="text-sm font-semibold text-white/70">Recent Feedback</h3>
