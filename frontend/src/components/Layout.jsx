@@ -1,6 +1,7 @@
 import { User } from 'lucide-react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import ThemeToggle from './ThemeToggle';
 import {
   LayoutDashboard,
   MessageSquareText,
@@ -92,6 +93,7 @@ export default function Layout() {
               <p className="text-[11px] text-white/30 truncate">{user?.email}</p>
             </div>
           </div>
+          <ThemeToggle />
           <NavLink
             to="/profile"
             onClick={() => setOpen(false)}

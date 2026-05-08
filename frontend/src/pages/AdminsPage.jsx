@@ -14,6 +14,7 @@ export default function AdminsPage() {
     password: '',
     password_confirmation: '',
   });
+  
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [created, setCreated] = useState(null);

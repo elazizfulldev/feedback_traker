@@ -120,10 +120,11 @@ export default function DashboardPage() {
     datasets: [{ label: 'Feedback', data: Object.values(stats.by_month || {}), borderColor: '#6366f1', backgroundColor: 'rgba(99,102,241,0.08)', borderWidth: 2, fill: true, tension: 0.4, pointBackgroundColor: '#6366f1', pointBorderColor: '#0a0b0f', pointBorderWidth: 2, pointRadius: 4, pointHoverRadius: 6 }],
   };
 
-  const tooltipStyle = { backgroundColor: '#1a1b25', borderColor: 'rgba(255,255,255,0.08)', borderWidth: 1, titleColor: '#fff', bodyColor: 'rgba(255,255,255,0.7)', padding: 10, cornerRadius: 10, titleFont: { family: 'Plus Jakarta Sans', weight: '600' }, bodyFont: { family: 'Plus Jakarta Sans' } };
+  const isDark = document.documentElement.classList.contains('dark');
+  const tooltipStyle = { backgroundColor: isDark ? '#1a1b25' : '#ffffff', borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)', borderWidth: 1, titleColor: isDark ? '#fff' : '#111827', bodyColor: isDark ? 'rgba(255,255,255,0.7)' : 'rgba(17,24,39,0.7)', padding: 10, cornerRadius: 10, titleFont: { family: 'Plus Jakarta Sans', weight: '600' }, bodyFont: { family: 'Plus Jakarta Sans' } };
   const chartBase = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: tooltipStyle } };
-  const axisStyle = { color: 'rgba(255,255,255,0.3)', font: { family: 'Plus Jakarta Sans', size: 11 } };
-  const gridStyle = { color: 'rgba(255,255,255,0.04)' };
+  const axisStyle = { color: isDark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.4)', font: { family: 'Plus Jakarta Sans', size: 11 } };
+  const gridStyle = { color: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.06)' };
   const scaleOpts = { x: { grid: { display: false }, border: { display: false }, ticks: axisStyle }, y: { beginAtZero: true, grid: gridStyle, border: { display: false }, ticks: { ...axisStyle, stepSize: 1 } } };
 
   const selectedOwnerName = selectedOwner
