@@ -8,7 +8,7 @@ const api = axios.create({
   },
 });
 
-// ── Request interceptor: attach token ──────────────
+/*===== Request interceptor: attach token =============*/
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -17,7 +17,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// ── Response interceptor: handle 401 ───────────────
+/*===== Response interceptor: handle 401 =============*/
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -35,7 +35,7 @@ api.interceptors.response.use(
   }
 );
 
-// ── Auth API ───────────────────────────────────────
+/*==== Auth API =====*/
 export const authApi = {
   register: (data) => api.post('/register', data),
   login:    (data) => api.post('/login', data),
@@ -43,7 +43,7 @@ export const authApi = {
   getUser:  ()     => api.get('/user'),
 };
 
-// ── Feedback API ───────────────────────────────────
+/*==== Feedback API =====*/
 export const feedbackApi = {
   list:   (page = 1) => api.get(`/feedback?page=${page}`),
   create: (data)     => api.post('/feedback', data),
@@ -63,6 +63,14 @@ export const profileApi = {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
   },
+};
+
+/*==== Users API (admin only) ========*/
+export const usersApi = {
+  list:   (page = 1) => api.get(`/users?page=${page}`),
+  create: (data)     => api.post('/users', data),
+  update: (id, data) => api.put(`/users/${id}`, data),
+  delete: (id)       => api.delete(`/users/${id}`),
 };
 
 export default api;

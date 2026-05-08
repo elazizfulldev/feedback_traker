@@ -10,6 +10,7 @@ import {
   Menu,
   X,
   Zap,
+  Users,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -18,6 +19,7 @@ const navItems = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard, roles: ['admin', 'owner'] },
   { to: '/feedback', label: 'Feedback', icon: MessageSquareText, roles: ['admin', 'owner'] },
   { to: '/feedback/new', label: 'Add Feedback', icon: PlusCircle, roles: ['admin', 'owner'] },
+  { to: '/users',        label: 'Users',        icon: Users, roles: ['admin'] },
   { to: '/admins/add', label: 'Add Admin', icon: UserPlus, roles: ['admin'] },
 ];
 

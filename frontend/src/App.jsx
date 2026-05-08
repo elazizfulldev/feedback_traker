@@ -7,6 +7,8 @@ import FeedbackPage from './pages/FeedbackPage';
 import FeedbackFormPage from './pages/FeedbackFormPage';
 import AddAdminPage from './pages/AddAdminPage';
 import ProfilePage from './pages/ProfilePage';
+import UsersPage from './pages/UsersPage';
+import UserFormPage from './pages/UserFormPage';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -38,6 +40,9 @@ export default function App() {
         <Route path="feedback/:id/edit" element={<FeedbackFormPage />} />
         <Route path="admins/add" element={<AddAdminPage />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="users" element={<UsersPage />} />
+        <Route path="users/new" element={<UserFormPage />} />
+        <Route path="users/:id/edit" element={<UserFormPage />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
