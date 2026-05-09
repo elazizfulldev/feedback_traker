@@ -1,6 +1,6 @@
 services:
 
-  # ── MySQL Database ────────────────────────────
+  #======== MySQL Database ============================
   db:
     image: mysql:8.0
     container_name: feedbackos-db
@@ -20,7 +20,7 @@ services:
       timeout: 5s
       retries: 5
 
-  # ── Laravel API ───────────────────────────────
+  #======== Laravel API ============================
   api:
     build:
       context: ./backend
@@ -50,7 +50,7 @@ services:
       db:
         condition: service_healthy
 
-  # ── React Frontend ────────────────────────────
+  #======== React Frontend ============================
   frontend:
     build:
       context: ./frontend

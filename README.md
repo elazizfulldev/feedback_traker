@@ -1,381 +1,447 @@
-# FeedbackOS — Client Feedback Tracker
+<div align="center">
 
-A full-stack Micro SaaS for collecting, organizing, and analyzing client feedback across multiple channels. Built with clean architecture, role-based access control, and production-ready security practices.
+# FeedbackOS
 
-**Stack:** Laravel 13 + Sanctum | React 18 + Vite | TailwindCSS | Chart.js | MySQL | Docker
+### Client Feedback Tracker SaaS
 
----
+A modern full-stack platform for collecting, managing, and analyzing client feedback across multiple channels.
 
-## The Problem
+<br/>
 
-Small businesses and freelancers receive client feedback from WhatsApp, email, phone, and web — but have no centralized way to track it. Existing tools like Canny ($79+/mo) and UserVoice ($999+/mo) are built for enterprise. Small teams need something simpler.
+<img src="https://readme-typing-svg.herokuapp.com?font=JetBrains+Mono&size=22&duration=3000&color=8B5CF6&center=true&vCenter=true&width=700&lines=Laravel+13+%2B+React+18+Architecture;Secure+Role-Based+Dashboard;Dockerized+Micro+SaaS;Production-Ready+Full-Stack+Application" />
 
-## The Solution
+<br/>
 
-FeedbackOS lets you collect feedback from any channel, see analytics at a glance, and manage your team with role-based access — all in a clean dashboard with light and dark mode support.
+<p>
+<img src="https://img.shields.io/badge/Laravel-13-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" />
+<img src="https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black" />
+<img src="https://img.shields.io/badge/Vite-5-646CFF?style=for-the-badge&logo=vite&logoColor=white" />
+<img src="https://img.shields.io/badge/TailwindCSS-3.4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" />
+<img src="https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
+</p>
 
----
+<p>
+<img src="https://img.shields.io/github/stars/elazizfulldev/feedback_traker?style=social" />
+<img src="https://img.shields.io/github/forks/elazizfulldev/feedback_traker?style=social" />
+</p>
 
-## Features
-
-**Authentication and Roles**
-- Token-based auth with Laravel Sanctum
-- Two roles: Admin (full access) and Owner (limited access)
-- Role-based sidebar — owners only see Dashboard, Feedback, Add Feedback, and Profile
-- Admins see everything: Users management, Add Admin, owner filter, and CSV export
-- Secure session handling with automatic token refresh
-
-**User Management (Admin only)**
-- Full CRUD: create, edit, and delete user accounts
-- Assign roles: Admin or Owner with visual role selector
-- User list with avatars, role badges, and join dates
-- Safety: admins cannot delete their own account
-- Edit password optional on update (leave empty to keep current)
-
-**Feedback Management**
-- Collect client info: first name, last name, email, phone, WhatsApp
-- Rating system (1-5 stars) with source tracking
-- Sources: WhatsApp, Email, Website, Phone, Other
-- Full CRUD with server-side pagination
-- Validation: at least one contact method required
-
-**Analytics Dashboard**
-- 5 stat cards: Total, Positive (4-5 stars), Negative (1-2 stars), Neutral (3 stars), Average Rating
-- Doughnut chart: feedback distribution by source
-- Bar chart: rating distribution (1 to 5 stars)
-- Line chart: monthly trend over 6 months
-- Admin view: sees all feedback across all owners with dropdown filter
-- Owner view: sees only their own data
-- Recent feedback feed with client avatars
-
-**Data Export (Admin only)**
-- Export all feedback or filtered by owner as CSV
-- Includes: owner info, client info, rating, comment, source, date
-- One-click download from dashboard
-
-**Profile Management**
-- Edit name and email
-- Change password with confirmation
-- Avatar upload with image preview
-- Role badge display (Admin / Owner)
-
-**UI/UX**
-- Light and dark mode with toggle in sidebar (persists in localStorage)
-- Dark glassmorphism design with custom color system
-- Full light mode support: cards, inputs, hovers, charts, scrollbars
-- Responsive: mobile sidebar with overlay, adaptive grids
-- Toast notification system (success, error, info)
-- Smooth animations (fade-in, slide-up)
-- Custom fonts: Plus Jakarta Sans, Playfair Display, JetBrains Mono
-
-**Docker Support**
-- Full Docker Compose setup: MySQL + Laravel + React/Nginx
-- One command to start: `docker compose up -d --build`
-- Auto-migration and seeding on first boot
-- Nginx reverse proxy: API and frontend on single port
+</div>
 
 ---
 
-## Tech Stack
+# Overview
 
-**Backend**
+FeedbackOS is a full-stack Micro SaaS built for freelancers and small businesses who need a centralized way to manage client feedback.
+
+Instead of losing feedback across WhatsApp, email, phone calls, and websites, FeedbackOS organizes everything into one secure analytics dashboard with role-based access control.
+
+---
+
+# Features
+
+## Authentication & Authorization
+
+- Laravel Sanctum authentication
+- Token-based API security
+- Role-based access control
+- Admin and Owner permissions
+- Protected routes
+- Axios interceptor auth handling
+
+---
+
+## User Management
+
+### Admin Features
+
+- Create users
+- Edit users
+- Delete users
+- Assign roles
+- Avatar uploads
+- Pagination support
+- Self-delete protection
+
+---
+
+## Feedback Management
+
+- Multi-channel feedback collection
+- Ratings system (1 → 5 stars)
+- CRUD operations
+- Source tracking
+- Pagination system
+- Contact validation rules
+
+### Supported Sources
+
+- WhatsApp
+- Email
+- Website
+- Phone
+- Other
+
+---
+
+## Analytics Dashboard
+
+- Total feedback count
+- Positive / Negative / Neutral stats
+- Average rating calculation
+- Doughnut charts
+- Bar charts
+- Monthly analytics
+- Owner filtering
+- Recent feedback activity
+
+---
+
+## UI / UX
+
+- Dark mode
+- Light mode
+- Glassmorphism UI
+- Responsive layout
+- Animated sidebar
+- Toast notifications
+- Smooth transitions
+- Modern typography
+
+---
+
+## Docker Support
+
+- Multi-container setup
+- Laravel container
+- React container
+- MySQL container
+- Nginx reverse proxy
+- One-command startup
+
+---
+
+# Tech Stack
+
+## Backend
 
 | Technology | Purpose |
-|------------|---------|
-| PHP 8.3 | Server language |
+|---|---|
+| PHP 8.3 | Backend language |
 | Laravel 13 | API framework |
-| Laravel Sanctum | Token-based authentication |
+| Sanctum | Authentication |
 | MySQL 8 | Database |
-| Eloquent ORM | Database queries and relationships |
-| Form Requests | Input validation (4 request classes) |
-| Policies | Authorization (owner-only access) |
-| Middleware | Admin role protection |
+| Eloquent ORM | Database relationships |
+| Policies | Authorization |
+| Middleware | Route protection |
 
-**Frontend**
+---
 
-| Technology | Purpose |
-|------------|---------|
-| React 18 | UI library |
-| Vite 5 | Build tool and dev server |
-| TailwindCSS 3.4 | Utility-first CSS framework |
-| React Router 6 | Client-side routing with guards |
-| Axios | HTTP client with interceptors |
-| Chart.js + react-chartjs-2 | Dashboard charts |
-| Lucide React | Professional SVG icon library |
-
-**DevOps**
+## Frontend
 
 | Technology | Purpose |
-|------------|---------|
+|---|---|
+| React 18 | Frontend library |
+| Vite 5 | Build tool |
+| TailwindCSS | Styling |
+| React Router 6 | Routing |
+| Axios | HTTP client |
+| Chart.js | Analytics charts |
+| Lucide React | Icons |
+
+---
+
+## DevOps
+
+| Technology | Purpose |
+|---|---|
 | Docker | Containerization |
 | Docker Compose | Multi-container orchestration |
-| Nginx | Reverse proxy + static file serving |
+| Nginx | Reverse proxy |
 
 ---
 
-## Architecture
+# Architecture
 
+```txt
 ┌──────────────────────────────────────────────┐
-│                   Frontend                    │
-│          React 18 + Vite + TailwindCSS        │
-│   Axios interceptors + React Router + Charts  │
+│                   Frontend                   │
+│        React 18 + Vite + TailwindCSS         │
 ├──────────────────────────────────────────────┤
-│              Nginx (Docker only)              │
-│     Serves React + Proxies /api → Laravel     │
+│                    Nginx                     │
+│          Reverse Proxy + Static Files        │
 ├──────────────────────────────────────────────┤
-│                 REST API (JSON)                │
+│                 Laravel API                  │
+│      Sanctum + Policies + Middleware         │
 ├──────────────────────────────────────────────┤
-│                   Backend                     │
-│          Laravel 13 + Sanctum Auth            │
-│  Form Requests + Policies + Admin Middleware   │
-├──────────────────────────────────────────────┤
-│                  Database                     │
-│           MySQL 8 (InnoDB, utf8mb4)           │
-│       Migrations + Seeders + Factories        │
+│                   MySQL 8                    │
+│         Migrations + Seeders + ORM           │
 └──────────────────────────────────────────────┘
+```
 
 ---
 
-## Role-Based Access
+# Role-Based Access
 
 | Feature | Admin | Owner |
-|---------|-------|-------|
-| Dashboard (own data) | Yes | Yes |
-| Dashboard (all owners + filter) | Yes | No |
-| Feedback CRUD | Yes | Yes (own only) |
-| Add Feedback | Yes | Yes |
-| Users Management | Yes | No |
-| Add Admin | Yes | No |
+|---|---|---|
+| Dashboard | Yes | Yes |
+| Global Analytics | Yes | No |
+| Feedback CRUD | Yes | Yes |
+| User Management | Yes | No |
 | CSV Export | Yes | No |
-| Profile | Yes | Yes |
-| Light/Dark Mode | Yes | Yes |
+| Profile Settings | Yes | Yes |
 
 ---
 
-## API Endpoints
+# API Endpoints
 
-**Auth (Public)**
+## Auth
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | /api/register | Create account (default role: owner) |
-| POST | /api/login | Authenticate and get token |
-
-**Auth (Protected)**
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | /api/logout | Revoke current token |
-| GET | /api/user | Get authenticated user with role |
-
-**Feedback (Protected)**
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /api/feedback | List feedback (admin: all/filtered, owner: own) |
-| POST | /api/feedback | Create feedback |
-| PUT | /api/feedback/{id} | Update feedback (owner only) |
-| DELETE | /api/feedback/{id} | Delete feedback (owner only) |
-| GET | /api/feedback/stats | Dashboard analytics (admin: filterable by owner) |
-| GET | /api/feedback/export | Export CSV (admin only, filterable by owner) |
-
-**Profile (Protected)**
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /api/profile | Get profile info |
-| PUT | /api/profile | Update name, email, or password |
-| POST | /api/profile/avatar | Upload profile picture |
-
-**Users (Admin only)**
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /api/users | List all users with pagination |
-| POST | /api/users | Create user with role |
-| PUT | /api/users/{id} | Update user (password optional) |
-| DELETE | /api/users/{id} | Delete user (cannot delete self) |
+```http
+POST   /api/register
+POST   /api/login
+POST   /api/logout
+GET    /api/user
+```
 
 ---
 
-## Database Schema
+## Feedback
 
-**users**
+```http
+GET    /api/feedback
+POST   /api/feedback
+PUT    /api/feedback/{id}
+DELETE /api/feedback/{id}
 
-| Column | Type | Notes |
-|--------|------|-------|
-| id | bigint | Auto-increment |
-| name | varchar(255) | |
-| email | varchar(255) | Unique |
-| password | varchar(255) | Bcrypt hashed |
-| role | enum(admin, owner) | Default: owner |
-| avatar | varchar(255) | Nullable, filename |
-| timestamps | | created_at, updated_at |
-
-**feedback**
-
-| Column | Type | Notes |
-|--------|------|-------|
-| id | bigint | Auto-increment |
-| user_id | FK → users | Cascade on delete |
-| first_name | varchar(255) | Client first name |
-| last_name | varchar(255) | Client last name |
-| email | varchar(255) | Nullable |
-| phone | varchar(20) | Nullable |
-| whatsapp | varchar(20) | Nullable |
-| rating | tinyint | 1 to 5 |
-| comment | text | Max 2000 chars |
-| source | enum | whatsapp, email, website, phone, other |
-| timestamps | | Indexed: (user_id, created_at) |
+GET    /api/feedback/stats
+GET    /api/feedback/export
+```
 
 ---
 
-## Project Structure
+## Profile
 
-backend/
-├── app/Http/Controllers/Api/
-│   ├── AuthController.php             # Login, register, logout
-│   ├── FeedbackController.php         # CRUD + stats + CSV export
-│   ├── ProfileController.php          # Profile update + avatar
-│   └── UserController.php             # User CRUD (admin only)
-├── app/Http/Middleware/
-│   └── EnsureIsAdmin.php              # Admin-only route guard
-├── app/Http/Requests/                 # 4 validation classes
-├── app/Models/
-│   ├── User.php                       # HasApiTokens, isAdmin(), isOwner()
-│   └── Feedback.php                   # Scopes, constants, accessor
-├── app/Policies/
-│   └── FeedbackPolicy.php            # Owner-only authorization
-├── database/migrations/               # users, feedback, tokens, role+avatar
-├── database/factories/                # UserFactory, FeedbackFactory
-├── database/seeders/                  # Demo admin + 30 entries
-├── routes/api.php                     # All API routes
-├── bootstrap/app.php                  # Route + middleware config
-├── Dockerfile                         # PHP 8.3 container
-└── docker-entrypoint.sh               # Auto-migrate + seed
-frontend/
-├── src/services/api.js                # Axios + auth/feedback/profile/users APIs
-├── src/contexts/
-│   ├── AuthContext.jsx                # Token + user state
-│   └── ToastContext.jsx               # Notifications
-├── src/components/
-│   ├── Layout.jsx                     # Role-based sidebar + theme toggle
-│   └── ThemeToggle.jsx                # Light/dark mode switch
-└── src/pages/
-├── LoginPage.jsx                  # Login with branding
-├── DashboardPage.jsx              # Stats + charts + owner filter + export
-├── FeedbackPage.jsx               # List + pagination
-├── FeedbackFormPage.jsx           # Create/edit form
-├── UsersPage.jsx                  # User list (admin only)
-├── UserFormPage.jsx               # Create/edit user with role selector
-├── AddAdminPage.jsx               # Quick admin creation
-└── ProfilePage.jsx                # Edit info + avatar
-├── Dockerfile                         # Node build + Nginx serve
-├── nginx.conf                         # SPA routing + API proxy
-├── docker-compose.yml                 # MySQL + Laravel + React
-└── .env.docker                        # Docker environment template
-
+```http
+GET    /api/profile
+PUT    /api/profile
+POST   /api/profile/avatar
+```
 
 ---
 
-## Security
+## Users
 
-| Practice | Implementation |
-|----------|---------------|
-| Password hashing | Bcrypt via Hash::make() with hashed cast |
-| Input validation | 4 dedicated Form Request classes |
-| Authorization | FeedbackPolicy — users access only their own data |
-| Role-based access | EnsureIsAdmin middleware on admin routes |
-| Token auth | Sanctum auth:sanctum on all protected routes |
-| CORS | Restricted to frontend origin only |
-| Data exposure | $hidden on User model (password, remember_token) |
-| Avatar security | Validated: image only, max 2MB, jpg/png/webp |
-| Self-delete protection | Admin cannot delete their own account |
-| 401 handling | Axios interceptor auto-redirects to login |
+```http
+GET    /api/users
+POST   /api/users
+PUT    /api/users/{id}
+DELETE /api/users/{id}
+```
+
+---
+# Project Structure
+
+feedback_traker/
+│
+├── backend/
+│   ├── app/
+│   │   ├── Http/
+│   │   │   ├── Controllers/
+│   │   │   │   └── Api/
+│   │   │   │       ├── AuthController.php
+│   │   │   │       ├── FeedbackController.php
+│   │   │   │       ├── ProfileController.php
+│   │   │   │       └── UserController.php
+│   │   │   │
+│   │   │   ├── Middleware/
+│   │   │   │   └── EnsureIsAdmin.php
+│   │   │   │
+│   │   │   └── Requests/
+│   │   │
+│   │   ├── Models/
+│   │   │   ├── User.php
+│   │   │   └── Feedback.php
+│   │   │
+│   │   └── Policies/
+│   │       └── FeedbackPolicy.php
+│   │
+│   ├── database/
+│   │   ├── migrations/
+│   │   ├── factories/
+│   │   └── seeders/
+│   │
+│   ├── routes/
+│   │   └── api.php
+│   │
+│   ├── bootstrap/
+│   │   └── app.php
+│   │
+│   ├── Dockerfile
+│   └── docker-entrypoint.sh
+│
+├── frontend/
+│   ├── src/
+│   │   ├── services/
+│   │   │   └── api.js
+│   │   │
+│   │   ├── contexts/
+│   │   │   ├── AuthContext.jsx
+│   │   │   └── ToastContext.jsx
+│   │   │
+│   │   ├── components/
+│   │   │   ├── Layout.jsx
+│   │   │   └── ThemeToggle.jsx
+│   │   │
+│   │   └── pages/
+│   │       ├── LoginPage.jsx
+│   │       ├── DashboardPage.jsx
+│   │       ├── FeedbackPage.jsx
+│   │       ├── FeedbackFormPage.jsx
+│   │       ├── UsersPage.jsx
+│   │       ├── UserFormPage.jsx
+│   │       ├── AddAdminPage.jsx
+│   │       └── ProfilePage.jsx
+│   │
+│   ├── Dockerfile
+│   └── nginx.conf
+│
+├── docker-compose.yml
+└── .env.docker
 
 ---
 
-## Quick Start
+# Security
 
-**Option 1 — Docker (recommended)**
+- Password hashing with bcrypt
+- Sanctum protected routes
+- Authorization policies
+- Middleware protection
+- Request validation
+- Hidden sensitive fields
+- Secure avatar validation
+- Owner-only resource access
+
+---
+
+# Quick Start
+
+## Docker Setup
 
 ```bash
 git clone https://github.com/elazizfulldev/feedback_traker.git
+
 cd feedback_traker
+
 cp .env.docker .env
+
 docker compose up -d --build
 ```
 
-Open http://localhost:3000
+---
 
-**Option 2 — Manual**
+## Manual Setup
 
-Prerequisites: PHP 8.3+, Composer, Node.js 20+, MySQL 8
+### Requirements
+
+- PHP 8.3+
+- Composer
+- Node.js 20+
+- MySQL 8
+
+---
+
+### Backend
 
 ```bash
-git clone https://github.com/elazizfulldev/feedback_traker.git
-cd feedback_traker
-
-# Database
-mysql -u root -p -e "CREATE DATABASE feedback_tracker;"
-
-# Backend
 cd backend
-cp .env.example .env
-composer install
-php artisan key:generate
-php artisan storage:link
-php artisan migrate --seed
-php artisan serve
 
-# Frontend (new terminal)
+cp .env.example .env
+
+composer install
+
+php artisan key:generate
+
+php artisan storage:link
+
+php artisan migrate --seed
+
+php artisan serve
+```
+
+---
+
+### Frontend
+
+```bash
 cd frontend
+
 npm install
+
 npm run dev
 ```
 
-Open http://localhost:5173
+---
 
-**Demo:** demo@example.com / password (role: admin)
+# Demo Credentials
+
+```txt
+Email: demo@example.com
+Password: password
+Role: Admin
+```
 
 ---
 
-## What I Learned
+# What I Learned
 
-- Designing a secure REST API with separation of concerns
-- Implementing role-based access control with middleware and policies
-- Building token-based authentication with Laravel Sanctum
-- Creating reusable React components with Context API
-- Setting up Axios interceptors for centralized auth handling
-- Handling file uploads securely with validation
-- Building responsive layouts with TailwindCSS
-- Creating analytics dashboards with Chart.js
-- Implementing light/dark mode with CSS overrides and localStorage
-- Containerizing a full-stack app with Docker Compose
-- Building admin tools: user management, data filtering, CSV export
-- Writing clean, maintainable code following production patterns
+- REST API architecture
+- Role-based authorization
+- Sanctum authentication
+- Dockerized deployment
+- React Context API
+- Axios interceptors
+- Advanced TailwindCSS layouts
+- Dashboard analytics systems
+- Secure file upload handling
+- Clean architecture patterns
 
 ---
 
-## Future Improvements
+# Future Improvements
 
-- Embeddable JavaScript widget for client websites
-- Sentiment analysis on feedback comments
-- Slack/Discord notifications on new feedback
-- Public feedback board with voting
-- Excel export alongside CSV
+- AI sentiment analysis
+- Public feedback boards
+- Slack integrations
+- Discord integrations
+- Embeddable widgets
+- Excel exports
 - Multi-language support
 
 ---
 
-## Author
+# Author
 
-**ElAziz Med-Amine** — Full-Stack Developer
+## ElAziz Med-Amine
 
-[GitHub](https://github.com/elazizfulldev)
+Full-Stack Developer
+
+<p>
+<a href="https://github.com/elazizfulldev">
+<img src="https://img.shields.io/badge/GitHub-elazizfulldev-181717?style=for-the-badge&logo=github" />
+</a>
+</p>
 
 ---
 
-## License
+# License
 
-MIT
+MIT License
+
+---
+
+<div align="center">
+
+### Star the repository if you like the project.
+
+</div>
