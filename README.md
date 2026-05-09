@@ -242,6 +242,8 @@ DELETE /api/users/{id}
 ---
 # Project Structure
 
+<pre>
+
 feedback_traker/
 │
 ├── backend/
@@ -308,6 +310,8 @@ feedback_traker/
 │
 ├── docker-compose.yml
 └── .env.docker
+
+</pre>
 
 ---
 
